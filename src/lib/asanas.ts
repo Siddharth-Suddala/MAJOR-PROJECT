@@ -93,17 +93,6 @@ export const ASANAS: Asana[] = [
     conditions: ["hamstrings", "spine", "calm", "stress", "flexibility"],
     scoringWeights: { hip: 0.45, knee: 0.35, shoulder: 0.2 },
   },
-  {
-    id: "corpse",
-    name: "Corpse Pose",
-    sanskrit: "Savasana",
-    difficulty: "Beginner",
-    duration: "5-10 minutes",
-    benefits: "Deep relaxation, reduces stress and supports recovery",
-    targetArea: "Relaxation",
-    conditions: ["stress", "anxiety", "relaxation", "sleep", "recovery"],
-    scoringWeights: { shoulder: 0.4, hip: 0.3, knee: 0.2, elbow: 0.1 },
-  },
 ];
 
 export const DEFAULT_ASANA_ID = "cat-cow";

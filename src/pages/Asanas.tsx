@@ -1,114 +1,64 @@
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Clock, Target, Play } from "lucide-react";
+import { Play, Target } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { ASANAS, DEFAULT_ASANA_ID } from "@/lib/asanas";
+import { ASANAS } from "@/lib/asanas";
 
 const Asanas = () => {
   const navigate = useNavigate();
-
-  const recommendedAsanas = ASANAS;
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Beginner":
-        return "bg-success/10 text-success";
-      case "Intermediate":
-        return "bg-warning/10 text-warning";
-      case "Advanced":
-        return "bg-destructive/10 text-destructive";
-      default:
-        return "bg-muted text-muted-foreground";
-    }
-  };
+  const asanas = ASANAS;
 
   return (
     <div className="min-h-screen bg-gradient-soft">
       <Navigation />
-      
-      <div className="pt-24 pb-16 px-4">
+
+      <div className="px-4 pb-16 pt-24">
         <div className="container mx-auto max-w-6xl">
-          {/* Header */}
           <div className="mb-12 space-y-4 animate-fade-in">
-            <h1 className="text-4xl lg:text-5xl font-bold text-foreground">
-              Yoga Asanas Library
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl">
+            <h1 className="text-4xl font-bold text-foreground lg:text-5xl">Yoga Asanas Library</h1>
+            <p className="max-w-3xl text-xl text-muted-foreground">
               Explore the full set of poses available in PosePerfect. Select any asana to start a guided session.
             </p>
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid sm:grid-cols-3 gap-4 mb-12 animate-scale-in">
-            <Card className="p-6 bg-gradient-card border-none shadow-soft">
-              <div className="text-3xl font-bold text-primary mb-1">{recommendedAsanas.length}</div>
-              <div className="text-sm text-muted-foreground">Total Asanas</div>
-            </Card>
-            <Card className="p-6 bg-gradient-card border-none shadow-soft">
-              <div className="text-3xl font-bold text-primary mb-1">3-10</div>
-              <div className="text-sm text-muted-foreground">Typical Duration (min)</div>
-            </Card>
-            <Card className="p-6 bg-gradient-card border-none shadow-soft">
-              <div className="text-3xl font-bold text-primary mb-1">Beginner-Intermediate</div>
-              <div className="text-sm text-muted-foreground">Difficulty Range</div>
-            </Card>
-          </div>
-
-          {/* Asanas List */}
           <div className="space-y-6">
-            {recommendedAsanas.map((asana, index) => (
+            {asanas.map((asana) => (
               <Card
-                key={index}
-                className="p-6 lg:p-8 bg-background border-border hover:shadow-medium transition-all hover:-translate-y-1 cursor-pointer"
+                key={asana.id}
+                className="cursor-pointer border-border bg-background p-6 transition-all hover:-translate-y-1 hover:shadow-medium lg:p-8"
                 onClick={() => navigate(`/session?asana=${encodeURIComponent(asana.id)}`)}
               >
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-2xl font-bold text-foreground mb-1">
-                          {asana.name}
-                        </h3>
-                        <p className="text-muted-foreground italic">{asana.sanskrit}</p>
-                      </div>
-                      <Badge className={getDifficultyColor(asana.difficulty)}>
-                        {asana.difficulty}
-                      </Badge>
+                <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+                  <div className="flex-1 space-y-4">
+                    <div>
+                      <h3 className="mb-1 text-2xl font-bold text-foreground">{asana.name}</h3>
+                      <p className="italic text-muted-foreground">{asana.sanskrit}</p>
                     </div>
 
                     <p className="text-foreground">{asana.benefits}</p>
 
-                    <div className="flex flex-wrap gap-4 text-sm">
-                      <div className="flex items-center text-muted-foreground">
-                        <Clock className="w-4 h-4 mr-2" />
-                        {asana.duration}
-                      </div>
-                      <div className="flex items-center text-muted-foreground">
-                        <Target className="w-4 h-4 mr-2" />
-                        {asana.targetArea}
-                      </div>
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <Target className="mr-2 h-4 w-4" />
+                      {asana.targetArea}
                     </div>
-
                   </div>
 
                   <Button
                     size="lg"
-                    className="bg-gradient-wellness hover:opacity-90 transition-opacity lg:self-center"
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    className="bg-gradient-wellness transition-opacity hover:opacity-90 lg:self-center"
+                    onClick={(event) => {
+                      event.stopPropagation();
                       navigate(`/session?asana=${encodeURIComponent(asana.id)}`);
                     }}
                   >
-                    <Play className="w-5 h-5 mr-2" />
+                    <Play className="mr-2 h-5 w-5" />
                     Start Practice
                   </Button>
                 </div>
               </Card>
             ))}
           </div>
-
         </div>
       </div>
     </div>
